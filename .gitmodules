@@ -1,0 +1,15 @@
+[submodule "libs/jsonlite"]
+	path = libs/jsonlite
+	url = git://github.com/amamchur/jsonlite.git
+[submodule "libs/SBJson"]
+	path = libs/SBJson
+	url = git://github.com/stig/json-framework.git
+[submodule "libs/JPJson"]
+	path = libs/JPJson
+	url = git://github.com/couchdeveloper/JPJson.git
+[submodule "libs/JSONKit"]
+	path = libs/JSONKit
+	url = git://github.com/johnezang/JSONKit.git
+[submodule "libs/yajl-objc"]
+	path = libs/yajl-objc
+	url = git://github.com/gabriel/yajl-objc.git
