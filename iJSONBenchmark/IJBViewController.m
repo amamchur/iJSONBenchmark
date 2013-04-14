@@ -11,6 +11,7 @@
 #import "JsonLiteAccumulator.h"
 #import "SBJson.h"
 #import "JSONKit.h"
+#import "YAJL.h"
 
 #import "mach/mach.h" 
 
@@ -88,6 +89,14 @@
     return [data objectFromJSONData];
 }
 
+- (id)goYAJLWithPayload:(NSData *)data {
+    NSError *error = nil;
+    YAJLDocument *doc = [[[YAJLDocument alloc] initWithParserOptions:YAJLParserOptionsCheckUTF8
+                                                           capacity:10001] autorelease];
+    [doc parse:data error:&error];
+    return error == nil ? doc.root : nil;
+}
+
 - (void)performTestForSelector:(SEL)sel {
     NSString *methodName = NSStringFromSelector(sel);
     NSMutableArray *array = [results objectForKey:methodName];
@@ -134,11 +143,12 @@
 
 - (void)performTest {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
         NSLog(@"Iteration %d finished", i);
         [self performTestForSelector:@selector(goJsonLiteWithPayload:)];
         [self performTestForSelector:@selector(goSBJsonWithPayload:)];
         [self performTestForSelector:@selector(goJSONKitWithPayload:)];
+        [self performTestForSelector:@selector(goYAJLWithPayload:)];
     }    
 }
 
@@ -164,6 +174,7 @@
     [self performTestForSelector:@selector(goJsonLiteWithPayload:)];
     [self performTestForSelector:@selector(goSBJsonWithPayload:)];
     [self performTestForSelector:@selector(goJSONKitWithPayload:)];
+    [self performTestForSelector:@selector(goYAJLWithPayload:)];
     
     [self performTest];
     [self printExcelCSV];

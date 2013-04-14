@@ -10,3 +10,6 @@
 [submodule "libs/JSONKit"]
 	path = libs/JSONKit
 	url = git://github.com/johnezang/JSONKit.git
+[submodule "libs/yajl-objc"]
+	path = libs/yajl-objc
+	url = git://github.com/gabriel/yajl-objc.git
