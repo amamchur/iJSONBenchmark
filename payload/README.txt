@@ -14,3 +14,7 @@ Files:
 	random.json
 	repeat.json
 	twitter_timeline.json
+
+From https://code.google.com/p/json-test-suite/
+Revision 3
+sample.json
