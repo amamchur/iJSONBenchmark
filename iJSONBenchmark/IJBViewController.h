@@ -10,4 +10,6 @@
 
 @interface IJBViewController : UIViewController
 
+- (IBAction)go:(id)sender;
+
 @end

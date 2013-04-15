@@ -116,7 +116,9 @@
     NSArray *methods = [[results allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSMutableString *header = [NSMutableString string];
     for (NSString *name in methods) {
-        [header appendFormat:@",%@", name];
+        [header appendFormat:@",min %@", name];
+        [header appendFormat:@",avg %@", name];
+        [header appendFormat:@",max %@", name];
     }
         
     NSMutableString *rows = [NSMutableString string];
@@ -127,23 +129,36 @@
             NSMutableArray *array = [results objectForKey:name];
             NSInteger count = 0;
             long sum = 0;
+            long min = LONG_MAX;
+            long max = LONG_MIN;
             for (IJBTestBenchmarkResult *r in array) {
                 if ([r.name isEqualToString:payload]) {
                     sum += r.timeNanoSec;
+                    max = MAX(max, r.timeNanoSec);
+                    min = MIN(max, r.timeNanoSec);
                     count++;
                 }
             }
             
+            [rows appendFormat:@",%ld", min];
             [rows appendFormat:@",%ld", (long)(sum / count)];
+            [rows appendFormat:@",%ld", max];
         }
     }
+    
+    NSString *str = [NSString stringWithFormat:@"%@%@", header, rows];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    basePath = [basePath stringByAppendingPathComponent:@"res.csv"];
+    NSLog(@"%@", basePath);
+    [str writeToFile:basePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
     NSLog(@"\n%@%@", header, rows);
 }
 
 - (void)performTest {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
         NSLog(@"Iteration %d finished", i);
         [self performTestForSelector:@selector(goJsonLiteWithPayload:)];
         [self performTestForSelector:@selector(goSBJsonWithPayload:)];
@@ -176,19 +191,6 @@
     [self performTestForSelector:@selector(goJSONKitWithPayload:)];
     [self performTestForSelector:@selector(goYAJLWithPayload:)];
     
-    [self performTest];
-    [self printExcelCSV];
-    
-//    for (NSString *key in results) {
-//        NSArray *array = [results objectForKey:key];
-//        long time = 0;
-//        for (IJBTestBenchmarkResult *result in array) {
-//            time += result.timeNanoSec;
-//        }
-//        
-//        NSLog(@"%@, %ld", key, time);
-//    }
-    
     [super viewDidLoad];
 }
 
@@ -200,6 +202,15 @@
     self.payloads = nil;
     self.results = nil;
     [super dealloc];
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+}
+
+- (IBAction)go:(id)sender {
+    [self performTest];
+    [self printExcelCSV];
 }
 
 @end
