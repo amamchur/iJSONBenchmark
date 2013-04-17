@@ -10,6 +10,7 @@
 
 @interface IJBViewController : UIViewController
 
-- (IBAction)go:(id)sender;
+- (IBAction)nonaSecTest:(id)sender;
+- (IBAction)compareTest:(id)sender;
 
 @end
