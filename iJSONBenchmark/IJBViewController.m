@@ -168,10 +168,9 @@
 }
 
 - (void)viewDidLoad {
-    self.payloads = [NSArray arrayWithObjects:
+    self.payloads = [[NSArray arrayWithObjects:
                      @"instruments",
                      @"nested",
-                     @"svg_menu",
                      @"update-center",
                      @"apache_builds",
                      @"mesh",
@@ -182,7 +181,7 @@
                      @"repeat",
                      @"twitter_timeline",
                      @"sample",
-                     nil];
+                     nil] sortedArrayUsingSelector:@selector(compare:)];
     
     // First iteration to create Objective-C methods' cache.
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];

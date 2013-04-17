@@ -7,6 +7,8 @@ Files:
 	mesh.json
 	mesh.pretty.json
 	nested.json
+	truenull.json
+	update-center.json
 
 From https://github.com/amamchur/iOS-JSON-Performance/tree/master/JSONlibs
 Commit 38d407fb81ab7ad4c3a220c9753efae8bc1d6c9e
@@ -17,4 +19,5 @@ Files:
 
 From https://code.google.com/p/json-test-suite/
 Revision 3
-sample.json
+Files:
+	sample.json
