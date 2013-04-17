@@ -7,11 +7,11 @@ Overview
 JSON Persers Information
 --------
 
-<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> - stream parser based on jsonlite tokenizer.
+<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit 41a6686d5c12f1866a8edc91c67a3c0ce0175bbb)
 
-<a href="https://github.com/gabriel/yajl-objc">YAJL Framework</a> - stream parser based on YAJL tokenizer.
+<a href="https://github.com/gabriel/yajl-objc">YAJL Framework</a> (Commit 29c91797005ce0c7eb914333662c5ce3721347af)
 
-<a href="https://github.com/johnezang/JSONKit">JSONKit</a> - recursion based parser.
+<a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
 
 Payload Information
 --------
