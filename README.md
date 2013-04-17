@@ -4,7 +4,7 @@ iJSONBenchmark
 Overview
 --------
 
-JSON Persers' Information
+JSON Persers Information
 --------
 
 <a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> - stream parser based on jsonlite tokenizer.
@@ -17,7 +17,7 @@ Payload Information
 --------
 <table>
     <tr>
-        <th>File Name</v>
+        <th>File Name</th>
         <th>Source</th>
         <th>Description</th>
     </tr>
@@ -81,4 +81,89 @@ Payload Information
         <td><a href="https://code.google.com/p/json-test-suite/downloads/list">json-test-suite</a></td>
         <td>UNICODE stress test</td>
     </tr>
-<table/>
+</table>
+
+Payload Passing
+--------
+
+<table>
+    <tr>
+        <th>File Name</th>
+        <th>JsonLite</th>
+        <th>YALJ</th>
+        <th>JSONKit</th>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/apache_builds.json">apache_builds.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/github_events.json">github_events.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/instruments.json">instruments.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/mesh.json">mesh.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/mesh.pretty.json">mesh.pretty.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/truenull.json">truenull.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/update-center.json">update-center.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/random.json">random.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/repeat.json">repeat.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/twitter_timeline.json">twitter_timeline.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/sample.json">sample.json</a></td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>Fail</td>
+    </tr>
+</table>
+
