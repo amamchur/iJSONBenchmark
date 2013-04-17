@@ -149,7 +149,7 @@
     NSString *str = [NSString stringWithFormat:@"%@%@", header, rows];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    basePath = [basePath stringByAppendingPathComponent:@"res.csv"];
+    basePath = [basePath stringByAppendingPathComponent:@"nanosec.csv"];
     NSLog(@"%@", basePath);
     [str writeToFile:basePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
