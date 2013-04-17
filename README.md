@@ -7,11 +7,14 @@ Overview
 JSON Persers Information
 --------
 
+<a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
+
 <a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit 41a6686d5c12f1866a8edc91c67a3c0ce0175bbb)
+
+<a href="https://github.com/stig/json-framework">SBJson</a> (Commit ad4bad36abb899b53a8eb9c0896f388ea484fbeb)
 
 <a href="https://github.com/gabriel/yajl-objc">YAJL Framework</a> (Commit 29c91797005ce0c7eb914333662c5ce3721347af)
 
-<a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
 
 Payload Information
 --------
@@ -89,12 +92,14 @@ Payload Passing
 <table>
     <tr>
         <th>File Name</th>
-        <th>JsonLite</th>
-        <th>YALJ</th>
         <th>JSONKit</th>
+        <th>JsonLite</th>
+        <th>SBJson</th>
+        <th>YAJL</th>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/apache_builds.json">apache_builds.json</a></td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -104,9 +109,11 @@ Payload Passing
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/instruments.json">instruments.json</a></td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -116,9 +123,11 @@ Payload Passing
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/mesh.pretty.json">mesh.pretty.json</a></td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -128,9 +137,11 @@ Payload Passing
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/truenull.json">truenull.json</a></td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -140,9 +151,11 @@ Payload Passing
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/random.json">random.json</a></td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -152,18 +165,21 @@ Payload Passing
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/twitter_timeline.json">twitter_timeline.json</a></td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/sample.json">sample.json</a></td>
-        <td>✔</td>
-        <td>✔</td>
         <td>Fail</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
     </tr>
 </table>
 
