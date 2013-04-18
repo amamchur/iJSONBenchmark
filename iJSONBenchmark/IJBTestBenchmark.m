@@ -38,6 +38,10 @@
     [super dealloc];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ - %ld", self.name, self.timeNanoSec];
+}
+
 @end
 
 @implementation IJBTestBenchmark
@@ -51,7 +55,7 @@
         self.payloadCache = [[NSCache alloc] init];
         self.payloads = [[NSArray arrayWithObjects:
                           @"instruments",
-                          @"nested",
+//                          @"nested",
                           @"update-center",
                           @"apache_builds",
                           @"mesh",
@@ -67,11 +71,9 @@
                         [IJBParser parserWithName:@"JsonLite" selector:@selector(goJsonLiteWithPayload:)],
                         [IJBParser parserWithName:@"JSONKit" selector:@selector(goJSONKitWithPayload:)],
                         [IJBParser parserWithName:@"YALJ" selector:@selector(goYAJLWithPayload:)],
-                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
+//                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
                         [IJBParser parserWithName:@"NSJSONSerialization" selector:@selector(goJSONSerialization:)],
                         nil];
-        
-        // First iteration to create Objective-C methods' cache.
         self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     }
     return self;
@@ -211,20 +213,24 @@
     NSData *data = [self dataForPayload:name];
     IJBTestBenchmarkResult *result = [[IJBTestBenchmarkResult alloc] init];
     result.name = name;
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     struct rusage r;
-    struct timeval bu, bs;
+    int res = getrusage(RUSAGE_SELF, &r);
+    if (res < 0) {
+        NSLog(@"getrusage error %d", res);
+    }
+    struct timeval bu = r.ru_utime;
+    struct timeval bs = r.ru_stime;
     
-    getrusage(RUSAGE_SELF, &r);
-    bu = r.ru_utime;
-    bs = r.ru_stime;
-    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     id obj = [self performSelector:selector withObject:data];
-    BOOL success = obj != nil;
-    
+    BOOL success = obj != nil;    
     [pool release];
     
-    getrusage(RUSAGE_SELF, &r);
+    res = getrusage(RUSAGE_SELF, &r);
+    if (res < 0) {
+        NSLog(@"getrusage error %d", res);
+    }
     
     long time = (r.ru_utime.tv_sec - bu.tv_sec) + (r.ru_stime.tv_sec - bs.tv_sec);
     time = time * 1000000;
@@ -255,8 +261,7 @@
     }
     
     for (NSString *name in payloads) {
-        IJBTestBenchmarkResult *r = [self resultForTest:sel
-                                                payload:name];
+        IJBTestBenchmarkResult *r = [self resultForTest:sel payload:name];
         [array addObject:r];
     }
 }
@@ -277,20 +282,20 @@
         for (NSString *name in methods) {
             NSMutableArray *array = [results objectForKey:name];
             NSInteger count = 0;
-            long sum = 0;
+            long long sum = 0;
             long min = LONG_MAX;
             long max = LONG_MIN;
             for (IJBTestBenchmarkResult *r in array) {
                 if ([r.name isEqualToString:payload]) {
                     sum += r.timeNanoSec;
+                    min = MIN(min, r.timeNanoSec);
                     max = MAX(max, r.timeNanoSec);
-                    min = MIN(max, r.timeNanoSec);
                     count++;
                 }
             }
             
             [rows appendFormat:@",%ld", min];
-            [rows appendFormat:@",%ld", (long)(sum / count)];
+            [rows appendFormat:@",%ld", (long)((double)sum / (double)count)];
             [rows appendFormat:@",%ld", max];
         }
     }
@@ -343,7 +348,6 @@
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (int i = 0; i < iterations; i++) {
         for (IJBParser *p in self.parsers) {
-            [[NSRunLoop mainRunLoop] runUntilDate:[NSDate distantFuture]];
             [self performPerformanceTestForSelector:p.selector];
         }
     }
@@ -401,8 +405,8 @@
 
 - (id)goJSONSerialization:(NSData *)data {
     NSError *error = nil;
-    id [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    return error == nil ? doc.root : nil;
+    id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    return error == nil ? object : nil;
 }
 
 

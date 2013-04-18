@@ -44,7 +44,7 @@
 }
 
 - (IBAction)nonaSecTest:(id)sender {
-    [self.benchmark performTestWithIterations:10];
+    [self.benchmark performTestWithIterations:50];
     [self.benchmark printNanoSecCSV];
 }
 
