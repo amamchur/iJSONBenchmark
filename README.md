@@ -4,7 +4,7 @@ iJSONBenchmark
 Overview
 --------
 
-JSON Persers Information
+JSON Parsers
 --------
 
 <a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
