@@ -89,6 +89,8 @@ Payload Information
 Payload Passing
 --------
 
+Tests were performed on iPad Gen4 Model MD510TU/A
+
 <table>
     <tr>
         <th>File Name</th>
@@ -134,7 +136,7 @@ Payload Passing
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td>✔</td>
+        <td>Stack overflow</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -186,6 +188,8 @@ Payload Passing
 Memory Leaks Test
 --------
 
+Tests were performed on iPad Gen4 Model MD510TU/A
+
 <table>
     <tr>
         <th>File Name</th>
@@ -231,7 +235,7 @@ Memory Leaks Test
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td>✔</td>
+        <td>N/A</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
