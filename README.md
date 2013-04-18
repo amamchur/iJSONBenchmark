@@ -9,7 +9,7 @@ JSON Parsers
 
 <a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
 
-<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit fa9bb8ec1d97f0675b412d881faf5b2aafb8c6f1)
+<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit 7a9a73eb740fa8e8679e4c10b0fd211b48dd1ba3)
 
 <a href="https://github.com/stig/json-framework">SBJson</a> (Commit ad4bad36abb899b53a8eb9c0896f388ea484fbeb)
 
