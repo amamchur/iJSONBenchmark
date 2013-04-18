@@ -60,7 +60,7 @@
 		8486BA00171B4B0200331ED5 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9F5171B4B0200331ED5 /* SBJsonStreamWriterState.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		8486BA01171B4B0200331ED5 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9F7171B4B0200331ED5 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		84D49680171F6975002F2DD9 /* IJBTestBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4967F171F6975002F2DD9 /* IJBTestBenchmark.m */; };
-		84D49683171F6CD7002F2DD9 /* IJBAllocationParserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D49682171F6CD7002F2DD9 /* IJBAllocationParserViewController.m */; };
+		84D49683171F6CD7002F2DD9 /* IJBParsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D49682171F6CD7002F2DD9 /* IJBParsersViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,8 +171,8 @@
 		8486B9F7171B4B0200331ED5 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		84D4967E171F6975002F2DD9 /* IJBTestBenchmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJBTestBenchmark.h; sourceTree = "<group>"; };
 		84D4967F171F6975002F2DD9 /* IJBTestBenchmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJBTestBenchmark.m; sourceTree = "<group>"; };
-		84D49681171F6CD7002F2DD9 /* IJBAllocationParserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJBAllocationParserViewController.h; sourceTree = "<group>"; };
-		84D49682171F6CD7002F2DD9 /* IJBAllocationParserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJBAllocationParserViewController.m; sourceTree = "<group>"; };
+		84D49681171F6CD7002F2DD9 /* IJBParsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJBParsersViewController.h; sourceTree = "<group>"; };
+		84D49682171F6CD7002F2DD9 /* IJBParsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJBParsersViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,8 +340,8 @@
 				8486B9A0171B3C2E00331ED5 /* IJBAppDelegate.m */,
 				84D4967E171F6975002F2DD9 /* IJBTestBenchmark.h */,
 				84D4967F171F6975002F2DD9 /* IJBTestBenchmark.m */,
-				84D49681171F6CD7002F2DD9 /* IJBAllocationParserViewController.h */,
-				84D49682171F6CD7002F2DD9 /* IJBAllocationParserViewController.m */,
+				84D49681171F6CD7002F2DD9 /* IJBParsersViewController.h */,
+				84D49682171F6CD7002F2DD9 /* IJBParsersViewController.m */,
 				8486B9A8171B3C2E00331ED5 /* IJBViewController.h */,
 				8486B9A9171B3C2E00331ED5 /* IJBViewController.m */,
 				8486B9AB171B3C2E00331ED5 /* IJBViewController.xib */,
@@ -591,7 +591,7 @@
 				842AA608171B6F3800C573C2 /* yajl_parser.c in Sources */,
 				842AA609171B6F3800C573C2 /* yajl_version.c in Sources */,
 				84D49680171F6975002F2DD9 /* IJBTestBenchmark.m in Sources */,
-				84D49683171F6CD7002F2DD9 /* IJBAllocationParserViewController.m in Sources */,
+				84D49683171F6CD7002F2DD9 /* IJBParsersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

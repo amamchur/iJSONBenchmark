@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class IJBTestBenchmark;
+@class IJBParser;
 
-@interface IJBAllocationParserViewController : UITableViewController
+@interface IJBParsersViewController : UITableViewController
 
 @property (nonatomic, retain) IJBTestBenchmark *benchmark;
+@property (nonatomic, assign) SEL selector;
+
+- (void)singleIteration:(IJBParser *)parser;
 
 @end

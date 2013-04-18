@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Andrii Mamchur. All rights reserved.
 //
 
-#import "IJBAllocationParserViewController.h"
+#import "IJBParsersViewController.h"
 #import "IJBTestBenchmark.h"
 
-@interface IJBAllocationParserViewController ()
+@interface IJBParsersViewController ()
 
 @end
 
-@implementation IJBAllocationParserViewController
+@implementation IJBParsersViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,8 +50,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     IJBParser *p = [self.benchmark.parsers objectAtIndex:indexPath.row];
-    [self.benchmark performTestWithIterations:1 forParser:p];
+    [self performSelector:self.selector withObject:p];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)singleIteration:(IJBParser *)parser {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self.benchmark performTestWithIterations:1 forParser:parser];
+    [pool release];
 }
 
 @end

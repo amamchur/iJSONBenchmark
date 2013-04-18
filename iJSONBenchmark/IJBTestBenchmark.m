@@ -68,6 +68,7 @@
                         [IJBParser parserWithName:@"JSONKit" selector:@selector(goJSONKitWithPayload:)],
                         [IJBParser parserWithName:@"YALJ" selector:@selector(goYAJLWithPayload:)],
                         [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
+                        [IJBParser parserWithName:@"NSJSONSerialization" selector:@selector(goJSONSerialization:)],
                         nil];
         
         // First iteration to create Objective-C methods' cache.
@@ -342,6 +343,7 @@
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (int i = 0; i < iterations; i++) {
         for (IJBParser *p in self.parsers) {
+            [[NSRunLoop mainRunLoop] runUntilDate:[NSDate distantFuture]];
             [self performPerformanceTestForSelector:p.selector];
         }
     }
@@ -350,21 +352,25 @@
 - (void)performCompareTest {
     NSInteger count = [self.parsers count];
     for (NSString *payload in payloads) {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:count];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:count];
         for (IJBParser *p1 in self.parsers) {
             NSMutableDictionary *d = [NSMutableDictionary dictionaryWithCapacity:count];
+            [self.payloadCache removeAllObjects];
             [dict setObject:d forKey:p1.name];
             
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
             id object1 = [self objectOfTest:p1.selector payload:payload];
             for (IJBParser *p2 in self.parsers) {
+                NSAutoreleasePool *nestedPool = [[NSAutoreleasePool alloc] init];
                 id object2 = [self objectOfTest:p2.selector payload:payload];
                 BOOL equal = [self compareObject:object1 withObject:object2];
                 [d setObject:[NSNumber numberWithBool:equal] forKey:p2.name];
+                [nestedPool release];
             }
+            [pool release];
         }
         [self printCompareReportForPayload:payload withDict:dict];
-        [pool release];
+        [dict release];
     }
 }
 
@@ -390,6 +396,12 @@
     YAJLDocument *doc = [[[YAJLDocument alloc] initWithParserOptions:YAJLParserOptionsCheckUTF8
                                                             capacity:10001] autorelease];
     [doc parse:data error:&error];
+    return error == nil ? doc.root : nil;
+}
+
+- (id)goJSONSerialization:(NSData *)data {
+    NSError *error = nil;
+    id [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     return error == nil ? doc.root : nil;
 }
 

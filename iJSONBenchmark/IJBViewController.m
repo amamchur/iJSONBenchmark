@@ -8,7 +8,7 @@
 
 #import "IJBViewController.h"
 #import "IJBTestBenchmark.h"
-#import "IJBAllocationParserViewController.h"
+#import "IJBParsersViewController.h"
 
 #import "JsonLiteAccumulator.h"
 #import "SBJson.h"
@@ -53,8 +53,9 @@
 }
 
 - (IBAction)testAllocation:(id)sender {
-    IJBAllocationParserViewController *vc = [[IJBAllocationParserViewController alloc] initWithStyle:UITableViewStylePlain];
+    IJBParsersViewController *vc = [[IJBParsersViewController alloc] initWithStyle:UITableViewStylePlain];
     vc.benchmark = self.benchmark;
+    vc.selector = @selector(singleIteration:);
     [self.navigationController pushViewController:[vc autorelease] animated:YES];
 }
 
