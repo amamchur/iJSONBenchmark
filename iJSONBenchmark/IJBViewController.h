@@ -12,5 +12,6 @@
 
 - (IBAction)nonaSecTest:(id)sender;
 - (IBAction)compareTest:(id)sender;
+- (IBAction)testAllocation:(id)sender;
 
 @end

@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) IJBViewController *viewController;
+@property (strong, nonatomic) UIViewController *viewController;
 
 @end
