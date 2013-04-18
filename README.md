@@ -136,7 +136,7 @@ Tests were performed on iPad Gen4 Model MD510TU/A
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td>Stack overflow</td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
@@ -235,7 +235,7 @@ Tests were performed on iPad Gen4 Model MD510TU/A
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td>N/A</td>
+        <td>✔</td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
