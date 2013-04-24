@@ -296,7 +296,7 @@ Performance Results
 
 Tests were performed on Core i5 arch i386 (less is better).
 
-https://docs.google.com/spreadsheet/ccc?key=0ApjrAc5bvHuhdDhoUlRYcnk4eW1WSzRjRmpxQmhRUlE&usp=sharing
+[Results are available at Google Drive](https://docs.google.com/spreadsheet/ccc?key=0ApjrAc5bvHuhdDhoUlRYcnk4eW1WSzRjRmpxQmhRUlE&usp=sharing)
 
 <img src="https://docs.google.com/spreadsheet/oimg?key=0ApjrAc5bvHuhdDhoUlRYcnk4eW1WSzRjRmpxQmhRUlE&oid=4&zx=6djd9txrlgb4" />
 
