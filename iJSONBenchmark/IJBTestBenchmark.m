@@ -55,7 +55,6 @@
         self.payloadCache = [[NSCache alloc] init];
         self.payloads = [[NSArray arrayWithObjects:
                           @"instruments",
-//                          @"nested",
                           @"update-center",
                           @"apache_builds",
                           @"mesh",
@@ -68,11 +67,15 @@
                           @"sample",
                           nil] sortedArrayUsingSelector:@selector(compare:)];
         self.parsers = [NSArray arrayWithObjects:
-                        [IJBParser parserWithName:@"JsonLite" selector:@selector(goJsonLiteWithPayload:)],
-                        [IJBParser parserWithName:@"JSONKit" selector:@selector(goJSONKitWithPayload:)],
-                        [IJBParser parserWithName:@"YALJ" selector:@selector(goYAJLWithPayload:)],
+                        [IJBParser parserWithName:@"JsonLite"
+                                         selector:@selector(goJsonLiteWithPayload:)],
+                        [IJBParser parserWithName:@"JSONKit"
+                                         selector:@selector(goJSONKitWithPayload:)],
+                        [IJBParser parserWithName:@"YAJL"
+                                         selector:@selector(goYAJLWithPayload:)],
 //                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
-                        [IJBParser parserWithName:@"NSJSONSerialization" selector:@selector(goJSONSerialization:)],
+                        [IJBParser parserWithName:@"NSJSONSerialization"
+                                         selector:@selector(goJSONSerialization:)],
                         nil];
         self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     }
@@ -209,7 +212,7 @@
     return data;
 }
 
-- (IJBTestBenchmarkResult *)resultForTest:(SEL)selector payload:(NSString *)name {
+- (IJBTestBenchmarkResult *)resultForTest:(IJBParser *)parser payload:(NSString *)name {
     NSData *data = [self dataForPayload:name];
     IJBTestBenchmarkResult *result = [[IJBTestBenchmarkResult alloc] init];
     result.name = name;
@@ -223,7 +226,7 @@
     struct timeval bs = r.ru_stime;
     
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    id obj = [self performSelector:selector withObject:data];
+    id obj = [self performSelector:parser.selector withObject:data];
     BOOL success = obj != nil;    
     [pool release];
     
@@ -252,16 +255,15 @@
     return success ? obj : nil;
 }
 
-- (void)performPerformanceTestForSelector:(SEL)sel {
-    NSString *methodName = NSStringFromSelector(sel);
-    NSMutableArray *array = [results objectForKey:methodName];
+- (void)performPerformanceTestForParser:(IJBParser *)parser {
+    NSMutableArray *array = [results objectForKey:parser.name];
     if (array == nil) {
         array = [NSMutableArray arrayWithCapacity:13];
-        [results setObject:array forKey:methodName];
+        [results setObject:array forKey:parser.name];
     }
     
     for (NSString *name in payloads) {
-        IJBTestBenchmarkResult *r = [self resultForTest:sel payload:name];
+        IJBTestBenchmarkResult *r = [self resultForTest:parser payload:name];
         [array addObject:r];
     }
 }
@@ -270,9 +272,7 @@
     NSArray *methods = [[results allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSMutableString *header = [NSMutableString string];
     for (NSString *name in methods) {
-        [header appendFormat:@",min %@", name];
-        [header appendFormat:@",avg %@", name];
-        [header appendFormat:@",max %@", name];
+        [header appendFormat:@",%@", name];
     }
     
     NSMutableString *rows = [NSMutableString string];
@@ -294,9 +294,7 @@
                 }
             }
             
-            [rows appendFormat:@",%ld", min];
             [rows appendFormat:@",%ld", (long)((double)sum / (double)count)];
-            [rows appendFormat:@",%ld", max];
         }
     }
     
@@ -340,7 +338,7 @@
 - (void)performTestWithIterations:(int)iterations forParser:(IJBParser *)p {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (int i = 0; i < iterations; i++) {
-        [self performPerformanceTestForSelector:p.selector];
+        [self performPerformanceTestForParser:p];
     }
 }
 
@@ -348,7 +346,7 @@
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (int i = 0; i < iterations; i++) {
         for (IJBParser *p in self.parsers) {
-            [self performPerformanceTestForSelector:p.selector];
+            [self performPerformanceTestForParser:p];
         }
     }
 }
