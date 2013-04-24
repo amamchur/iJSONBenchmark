@@ -73,7 +73,8 @@
                                          selector:@selector(goJSONKitWithPayload:)],
                         [IJBParser parserWithName:@"YAJL"
                                          selector:@selector(goYAJLWithPayload:)],
-//                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
+                        [IJBParser parserWithName:@"SBJson"
+                                         selector:@selector(goSBJsonWithPayload:)],
                         [IJBParser parserWithName:@"NSJSONSerialization"
                                          selector:@selector(goJSONSerialization:)],
                         nil];
