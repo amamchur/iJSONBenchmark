@@ -52,11 +52,6 @@ Payload Information
         <td>Number token stress test + formatting (good to measure whitespace skipping)</td>
     </tr>
     <tr>
-        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td><a href="https://github.com/chadaustin/Web-Benchmarks/tree/master/json/testdata">Web-Benchmarks</a></td>
-        <td>Nested array stress test</td>
-    </tr>
-    <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/truenull.json">truenull.json</a></td>
         <td><a href="https://github.com/chadaustin/Web-Benchmarks/tree/master/json/testdata">Web-Benchmarks</a></td>
         <td>Null and true token stress test</td>
@@ -143,14 +138,6 @@ Tests were performed on Core i5 arch i386
         <td>✔</td>
     </tr>
     <tr>
-        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-    </tr>
-    <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/truenull.json">truenull.json</a></td>
         <td>✔</td>
         <td>✔</td>
@@ -220,6 +207,7 @@ Tests were performed on Core i5 arch i386
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
+        <td>✔</td>
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/github_events.json">github_events.json</a></td>
@@ -247,14 +235,6 @@ Tests were performed on Core i5 arch i386
     </tr>
     <tr>
         <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/mesh.pretty.json">mesh.pretty.json</a></td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-    </tr>
-    <tr>
-        <td><a href="https://github.com/amamchur/iJSONBenchmark/blob/master/payload/nested.json">nested.json</a></td>
         <td>✔</td>
         <td>✔</td>
         <td>✔</td>
