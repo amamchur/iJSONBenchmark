@@ -381,8 +381,7 @@
 }
 
 - (id)goJsonLiteWithPayload:(NSData *)data {
-    // nested.json has 10000 nested arrays + 1 for reserve.
-    return [JsonLiteAccumulator objectFromData:data withMaxDepth:10001];
+    return [JsonLiteAccumulator objectFromData:data withMaxDepth:512];
 }
 
 - (id)goJPjsonWithPayload:(NSData *)data {
@@ -392,7 +391,7 @@
 
 - (id)goSBJsonWithPayload:(NSData *)data {
     SBJsonParser *parser = [[SBJsonParser alloc] init];
-    parser.maxDepth = 10001;
+    parser.maxDepth = 512;
     id obj = [[[parser objectWithData:data] retain] autorelease];
     [parser release];
     return obj;
@@ -405,7 +404,7 @@
 - (id)goYAJLWithPayload:(NSData *)data {
     NSError *error = nil;
     YAJLDocument *doc = [[[YAJLDocument alloc] initWithParserOptions:YAJLParserOptionsCheckUTF8
-                                                            capacity:10001] autorelease];
+                                                            capacity:512] autorelease];
     [doc parse:data error:&error];
     return error == nil ? doc.root : nil;
 }
