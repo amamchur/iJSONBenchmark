@@ -12,6 +12,7 @@
 #import "SBJson.h"
 #import "JSONKit.h"
 #import "YAJL.h"
+#import "JPJson/JPJsonParser.h"
 
 #import "mach/mach.h"
 
@@ -73,6 +74,8 @@
                                          selector:@selector(goJSONKitWithPayload:)],
                         [IJBParser parserWithName:@"YAJL"
                                          selector:@selector(goYAJLWithPayload:)],
+                        [IJBParser parserWithName:@"JPjson"
+                                         selector:@selector(goJPjsonWithPayload:)],
                         [IJBParser parserWithName:@"SBJson"
                                          selector:@selector(goSBJsonWithPayload:)],
                         [IJBParser parserWithName:@"NSJSONSerialization"
@@ -380,6 +383,11 @@
 - (id)goJsonLiteWithPayload:(NSData *)data {
     // nested.json has 10000 nested arrays + 1 for reserve.
     return [JsonLiteAccumulator objectFromData:data withMaxDepth:10001];
+}
+
+- (id)goJPjsonWithPayload:(NSData *)data {
+    id obj = [JPJsonParser parseData:data options:0 error:NULL];
+    return obj;
 }
 
 - (id)goSBJsonWithPayload:(NSData *)data {
