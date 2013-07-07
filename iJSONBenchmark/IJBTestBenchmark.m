@@ -72,14 +72,14 @@
                                          selector:@selector(goJsonLiteWithPayload:)],
                         [IJBParser parserWithName:@"JSONKit"
                                          selector:@selector(goJSONKitWithPayload:)],
-                        [IJBParser parserWithName:@"YAJL"
-                                         selector:@selector(goYAJLWithPayload:)],
+//                        [IJBParser parserWithName:@"YAJL"
+//                                         selector:@selector(goYAJLWithPayload:)],
                         [IJBParser parserWithName:@"JPjson"
                                          selector:@selector(goJPjsonWithPayload:)],
-                        [IJBParser parserWithName:@"SBJson"
-                                         selector:@selector(goSBJsonWithPayload:)],
-                        [IJBParser parserWithName:@"NSJSONSerialization"
-                                         selector:@selector(goJSONSerialization:)],
+//                        [IJBParser parserWithName:@"SBJson"
+//                                         selector:@selector(goSBJsonWithPayload:)],
+//                        [IJBParser parserWithName:@"NSJSONSerialization"
+//                                         selector:@selector(goJSONSerialization:)],
                         nil];
         self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     }

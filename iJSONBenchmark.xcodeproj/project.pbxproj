@@ -40,7 +40,6 @@
 		8486B9AD171B3C2E00331ED5 /* IJBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8486B9AB171B3C2E00331ED5 /* IJBViewController.xib */; };
 		8486B9B4171B3CCD00331ED5 /* payload in Resources */ = {isa = PBXBuildFile; fileRef = 8486B9B3171B3CCD00331ED5 /* payload */; };
 		8486B9D5171B45BD00331ED5 /* jsonlite_builder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9C1171B45BD00331ED5 /* jsonlite_builder.c */; };
-		8486B9D6171B45BD00331ED5 /* jsonlite_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9C2171B45BD00331ED5 /* jsonlite_hash.c */; };
 		8486B9D7171B45BD00331ED5 /* jsonlite_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9C3171B45BD00331ED5 /* jsonlite_parser.c */; };
 		8486B9D8171B45BD00331ED5 /* jsonlite_token.c in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9C4171B45BD00331ED5 /* jsonlite_token.c */; };
 		8486B9D9171B45BD00331ED5 /* jsonlite_token_pool.c in Sources */ = {isa = PBXBuildFile; fileRef = 8486B9C5171B45BD00331ED5 /* jsonlite_token_pool.c */; };
@@ -139,13 +138,11 @@
 		8486B9B3171B3CCD00331ED5 /* payload */ = {isa = PBXFileReference; lastKnownFileType = folder; path = payload; sourceTree = "<group>"; };
 		8486B9B9171B45BD00331ED5 /* jsonlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite.h; sourceTree = "<group>"; };
 		8486B9BA171B45BD00331ED5 /* jsonlite_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_builder.h; sourceTree = "<group>"; };
-		8486B9BB171B45BD00331ED5 /* jsonlite_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_hash.h; sourceTree = "<group>"; };
 		8486B9BC171B45BD00331ED5 /* jsonlite_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_parser.h; sourceTree = "<group>"; };
 		8486B9BD171B45BD00331ED5 /* jsonlite_token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_token.h; sourceTree = "<group>"; };
 		8486B9BE171B45BD00331ED5 /* jsonlite_token_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_token_pool.h; sourceTree = "<group>"; };
 		8486B9BF171B45BD00331ED5 /* jsonlite_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonlite_types.h; sourceTree = "<group>"; };
 		8486B9C1171B45BD00331ED5 /* jsonlite_builder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jsonlite_builder.c; sourceTree = "<group>"; };
-		8486B9C2171B45BD00331ED5 /* jsonlite_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jsonlite_hash.c; sourceTree = "<group>"; };
 		8486B9C3171B45BD00331ED5 /* jsonlite_parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jsonlite_parser.c; sourceTree = "<group>"; };
 		8486B9C4171B45BD00331ED5 /* jsonlite_token.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jsonlite_token.c; sourceTree = "<group>"; };
 		8486B9C5171B45BD00331ED5 /* jsonlite_token_pool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jsonlite_token_pool.c; sourceTree = "<group>"; };
@@ -426,7 +423,6 @@
 			children = (
 				8486B9B9171B45BD00331ED5 /* jsonlite.h */,
 				8486B9BA171B45BD00331ED5 /* jsonlite_builder.h */,
-				8486B9BB171B45BD00331ED5 /* jsonlite_hash.h */,
 				8486B9BC171B45BD00331ED5 /* jsonlite_parser.h */,
 				8486B9BD171B45BD00331ED5 /* jsonlite_token.h */,
 				8486B9BE171B45BD00331ED5 /* jsonlite_token_pool.h */,
@@ -439,7 +435,6 @@
 			isa = PBXGroup;
 			children = (
 				8486B9C1171B45BD00331ED5 /* jsonlite_builder.c */,
-				8486B9C2171B45BD00331ED5 /* jsonlite_hash.c */,
 				8486B9C3171B45BD00331ED5 /* jsonlite_parser.c */,
 				8486B9C4171B45BD00331ED5 /* jsonlite_token.c */,
 				8486B9C5171B45BD00331ED5 /* jsonlite_token_pool.c */,
@@ -596,7 +591,6 @@
 				8486B9A1171B3C2E00331ED5 /* IJBAppDelegate.m in Sources */,
 				8486B9AA171B3C2E00331ED5 /* IJBViewController.m in Sources */,
 				8486B9D5171B45BD00331ED5 /* jsonlite_builder.c in Sources */,
-				8486B9D6171B45BD00331ED5 /* jsonlite_hash.c in Sources */,
 				8486B9D7171B45BD00331ED5 /* jsonlite_parser.c in Sources */,
 				8486B9D8171B45BD00331ED5 /* jsonlite_token.c in Sources */,
 				8486B9D9171B45BD00331ED5 /* jsonlite_token_pool.c in Sources */,
