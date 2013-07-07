@@ -216,8 +216,9 @@
     return data;
 }
 
-- (IJBTestBenchmarkResult *)resultForTest:(IJBParser *)parser payload:(NSString *)name {
-    NSData *data = [self dataForPayload:name];
+- (IJBTestBenchmarkResult *)resultForTest:(IJBParser *)parser
+                                  payload:(NSString *)name
+                                     data:(NSData *)data {
     IJBTestBenchmarkResult *result = [[IJBTestBenchmarkResult alloc] init];
     result.name = name;
     
@@ -259,17 +260,18 @@
     return success ? obj : nil;
 }
 
-- (void)performPerformanceTestForParser:(IJBParser *)parser {
+- (void)performPerformanceTestForParser:(IJBParser *)parser
+                                payload:(NSString *)name
+                                   data:(NSData *)data {
     NSMutableArray *array = [results objectForKey:parser.name];
     if (array == nil) {
         array = [NSMutableArray arrayWithCapacity:13];
         [results setObject:array forKey:parser.name];
     }
     
-    for (NSString *name in payloads) {
-        IJBTestBenchmarkResult *r = [self resultForTest:parser payload:name];
-        [array addObject:r];
-    }
+    IJBTestBenchmarkResult *r = [self resultForTest:parser payload:name data:data];
+    [array addObject:r];
+    [self.payloadCache removeAllObjects];
 }
 
 - (void)printNanoSecCSV {
@@ -341,16 +343,24 @@
 
 - (void)performTestWithIterations:(int)iterations forParser:(IJBParser *)p {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
-    for (int i = 0; i < iterations; i++) {
-        [self performPerformanceTestForParser:p];
+    for (NSString *name in payloads) {
+        NSData *data = [self dataForPayload:name];
+        for (int i = 0; i < iterations; i++) {
+            [self performPerformanceTestForParser:p payload:name data:data];
+        }
+        [self.payloadCache removeAllObjects];
     }
 }
 
 - (void)performTestWithIterations:(int)iterations {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
-    for (int i = 0; i < iterations; i++) {
+    for (NSString *name in payloads) {
         for (IJBParser *p in self.parsers) {
-            [self performPerformanceTestForParser:p];
+            NSData *data = [self dataForPayload:name];
+            for (int i = 0; i < iterations; i++) {
+                [self performPerformanceTestForParser:p payload:name data:data];
+            }
+            [self.payloadCache removeAllObjects];
         }
     }
 }
