@@ -65,7 +65,6 @@
                           @"mesh.pretty",
                           @"repeat",
                           @"twitter_timeline",
-                          @"sample",
                           nil] sortedArrayUsingSelector:@selector(compare:)];
         self.parsers = [NSArray arrayWithObjects:
                         [IJBParser parserWithName:@"JsonLite"
