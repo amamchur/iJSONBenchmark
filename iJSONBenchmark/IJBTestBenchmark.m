@@ -1,10 +1,18 @@
 //
-//  IJBTestBenchmark.m
-//  iJSONBenchmark
+//  Copyright 2012-2013, Andrii Mamchur
 //
-//  Created by admin on 4/18/13.
-//  Copyright (c) 2013 Andrii Mamchur. All rights reserved.
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
 //
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License
+
 
 #import "IJBTestBenchmark.h"
 
@@ -14,7 +22,8 @@
 #import "YAJL.h"
 #import "JPJson/JPJsonParser.h"
 
-#import "mach/mach.h"
+#import <mach/mach.h>
+#import <mach/clock.h>
 
 @implementation IJBParser
 
@@ -34,13 +43,16 @@
 
 @implementation IJBTestBenchmarkResult
 
+@synthesize name;
+@synthesize timeNanoSec;
+
 - (void)dealloc {
     self.name = nil;
     [super dealloc];
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ - %ld", self.name, self.timeNanoSec];
+    return [NSString stringWithFormat:@"%@ - %lld", name, timeNanoSec];
 }
 
 @end
@@ -55,30 +67,24 @@
     if (self != nil) {
         self.payloadCache = [[NSCache alloc] init];
         self.payloads = [[NSArray arrayWithObjects:
-                          @"instruments",
-                          @"update-center",
                           @"apache_builds",
-                          @"mesh",
-                          @"random",
-                          @"truenull",
                           @"github_events",
+                          @"instruments",
+                          @"mesh",
                           @"mesh.pretty",
+                          @"random",
                           @"repeat",
+                          @"truenull",
                           @"twitter_timeline",
+                          @"update-center",
                           nil] sortedArrayUsingSelector:@selector(compare:)];
         self.parsers = [NSArray arrayWithObjects:
-                        [IJBParser parserWithName:@"JsonLite"
-                                         selector:@selector(goJsonLiteWithPayload:)],
-                        [IJBParser parserWithName:@"JSONKit"
-                                         selector:@selector(goJSONKitWithPayload:)],
-                        [IJBParser parserWithName:@"YAJL"
-                                         selector:@selector(goYAJLWithPayload:)],
-                        [IJBParser parserWithName:@"JPjson"
-                                         selector:@selector(goJPjsonWithPayload:)],
-                        [IJBParser parserWithName:@"SBJson"
-                                         selector:@selector(goSBJsonWithPayload:)],
-                        [IJBParser parserWithName:@"NSJSONSerialization"
-                                         selector:@selector(goJSONSerialization:)],
+                        [IJBParser parserWithName:@"JPjson" selector:@selector(goJPjsonWithPayload:)],
+                        [IJBParser parserWithName:@"JSONKit" selector:@selector(goJSONKitWithPayload:)],
+                        [IJBParser parserWithName:@"JsonLite" selector:@selector(goJsonLiteWithPayload:)],
+                        [IJBParser parserWithName:@"NSJSONSerialization" selector:@selector(goJSONSerialization:)],
+//                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
+//                        [IJBParser parserWithName:@"YAJL" selector:@selector(goYAJLWithPayload:)],
                         nil];
         self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     }
@@ -96,7 +102,7 @@
     double d1 = [n1 doubleValue];
     double d2 = [n2 doubleValue];
     double dx = fabs(d1 - d2);
-    return dx <= 0.00000005;
+    return dx <= 0.0000000005;
 }
 
 - (BOOL)compareDictionary:(NSDictionary *)d1 withDictionary:(NSDictionary *)d2 {
@@ -203,16 +209,18 @@
 }
 
 - (NSData *)dataForPayload:(NSString *)name {
-    NSData *data = [self.payloadCache objectForKey:name];
-    if (data == nil) {
-        NSString *file = [[NSBundle mainBundle] pathForResource:name
-                                                         ofType:@"json"
-                                                    inDirectory:@"payload"];
-        data = [NSData dataWithContentsOfFile:file];
-        [self.payloadCache setObject:data forKey:name];
+    @autoreleasepool {
+        NSData *data = [self.payloadCache objectForKey:name];
+        if (data == nil) {
+            NSString *file = [[NSBundle mainBundle] pathForResource:name
+                                                             ofType:@"json"
+                                                        inDirectory:@"payload"];
+            data = [NSData dataWithContentsOfFile:file];
+            [self.payloadCache setObject:data forKey:name];
+        }
+        
+        return data;
     }
-    
-    return data;
 }
 
 - (IJBTestBenchmarkResult *)resultForTest:(IJBParser *)parser
@@ -221,27 +229,21 @@
     IJBTestBenchmarkResult *result = [[IJBTestBenchmarkResult alloc] init];
     result.name = name;
     
-    struct rusage r;
-    int res = getrusage(RUSAGE_SELF, &r);
-    if (res < 0) {
-        NSLog(@"getrusage error %d", res);
-    }
-    struct timeval bu = r.ru_utime;
-    struct timeval bs = r.ru_stime;
+    clock_serv_t cclock;
+    mach_timespec_t start, end;
+    host_get_clock_service(mach_host_self(), SYSTEM_CLOCK, &cclock);
+    clock_get_time(cclock, &start);
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    id obj = [self performSelector:parser.selector withObject:data];
-    BOOL success = obj != nil;    
-    [pool release];
-    
-    res = getrusage(RUSAGE_SELF, &r);
-    if (res < 0) {
-        NSLog(@"getrusage error %d", res);
+    BOOL success = YES;
+    @autoreleasepool {
+        id obj = [self performSelector:parser.selector withObject:data];
+        success = obj != nil;
     }
     
-    long time = (r.ru_utime.tv_sec - bu.tv_sec) + (r.ru_stime.tv_sec - bs.tv_sec);
-    time = time * 1000000;
-    time += (r.ru_utime.tv_usec - bu.tv_usec) + (r.ru_stime.tv_usec - bs.tv_usec);
+    clock_get_time(cclock, &end);
+
+    long long time = (end.tv_sec - start.tv_sec) * 1000000000;
+    time += (end.tv_nsec - start.tv_nsec);
     result.timeNanoSec = success ? time : -1;
     return [result autorelease];
 }
@@ -273,44 +275,99 @@
     [self.payloadCache removeAllObjects];
 }
 
+- (void)appendString:(NSString *)str toStream:(NSOutputStream *)stream {
+    @autoreleasepool {
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [stream write:[data bytes] maxLength:[data length]];
+    }
+}
+
+- (void)printNanoSecCVSForParser:(NSString *)parser payload:(NSString *)payload {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *file = [NSString stringWithFormat:@"nanosec_%@_%@.csv", parser, payload];
+    NSString *avgReportFile = [basePath stringByAppendingPathComponent:file];
+    NSOutputStream *stream = [NSOutputStream outputStreamToFileAtPath:avgReportFile
+                                                                  append:NO];
+    [stream open];
+    NSMutableArray *array = [results objectForKey:parser];
+    int iteration = 1;
+    for (IJBTestBenchmarkResult *r in array) {
+        if ([r.name isEqualToString:payload]) {
+            [self appendString:[NSString stringWithFormat:@"%d, %lld\n", iteration++, r.timeNanoSec]
+                      toStream:stream];
+        }
+    }
+    [stream close];
+}
+
+- (void)printNanoSecCVSPerParser {
+    for (NSString *name in results) {
+        for (NSString *payload in payloads) {
+            [self printNanoSecCVSForParser:name payload:payload];
+        }
+    }
+}
+
 - (void)printNanoSecCSV {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *avgReportFile = [basePath stringByAppendingPathComponent:@"nanosec_avg.csv"];
+    NSString *minReportFile = [basePath stringByAppendingPathComponent:@"nanosec_min.csv"];
+    NSString *maxReportFile = [basePath stringByAppendingPathComponent:@"nanosec_max.csv"];
+    NSOutputStream *avgStream = [NSOutputStream outputStreamToFileAtPath:avgReportFile
+                                                                  append:NO];
+    NSOutputStream *minStream = [NSOutputStream outputStreamToFileAtPath:minReportFile
+                                                                  append:NO];
+    NSOutputStream *maxStream = [NSOutputStream outputStreamToFileAtPath:maxReportFile
+                                                                  append:NO];    
     NSArray *methods = [[results allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSMutableString *header = [NSMutableString string];
     for (NSString *name in methods) {
         [header appendFormat:@",%@", name];
     }
     
-    NSMutableString *rows = [NSMutableString string];
+    [avgStream open];
+    [minStream open];
+    [maxStream open];
+    [self appendString:header toStream:avgStream];
+    [self appendString:header toStream:minStream];
+    [self appendString:header toStream:maxStream];
+    
     for (NSString *payload in payloads) {
-        [rows appendFormat:@"\n%@", payload];
-        
+        NSMutableString *avgRow = [NSMutableString stringWithFormat:@"\n%@", payload];
+        NSMutableString *minRow = [NSMutableString stringWithFormat:@"\n%@", payload];
+        NSMutableString *maxRow = [NSMutableString stringWithFormat:@"\n%@", payload];
+       
         for (NSString *name in methods) {
-            NSMutableArray *array = [results objectForKey:name];
-            NSInteger count = 0;
-            long long sum = 0;
-            long min = LONG_MAX;
-            long max = LONG_MIN;
+            NSArray *array = [results objectForKey:name];
+            NSPredicate *p = [NSPredicate predicateWithFormat:@"name == %@", payload];
+            array = [array filteredArrayUsingPredicate:p];
+            
+            long long count = [array count];
+            long long avg = 0;
+            long long min = LLONG_MAX;
+            long long max = LLONG_MIN;            
+            
             for (IJBTestBenchmarkResult *r in array) {
-                if ([r.name isEqualToString:payload]) {
-                    sum += r.timeNanoSec;
-                    min = MIN(min, r.timeNanoSec);
-                    max = MAX(max, r.timeNanoSec);
-                    count++;
-                }
+                avg += (r.timeNanoSec / count);
+                min = MIN(min, r.timeNanoSec);
+                max = MAX(max, r.timeNanoSec);
             }
             
-            [rows appendFormat:@",%ld", (long)((double)sum / (double)count)];
+            [avgRow appendFormat:@",%lld", avg];
+            [minRow appendFormat:@",%lld", min];
+            [maxRow appendFormat:@",%lld", max];
         }
+        
+        [self appendString:avgRow toStream:avgStream];
+        [self appendString:minRow toStream:minStream];
+        [self appendString:maxRow toStream:maxStream];
     }
     
-    NSString *str = [NSString stringWithFormat:@"%@%@", header, rows];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    basePath = [basePath stringByAppendingPathComponent:@"nanosec.csv"];
-    NSLog(@"%@", basePath);
-    [str writeToFile:basePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    
-    NSLog(@"\n%@%@", header, rows);
+    [avgStream close];
+    [minStream close];
+    [maxStream close];
 }
 
 - (void)printCompareReportForPayload:(NSString *)name withDict:(NSDictionary *)dict {
@@ -355,11 +412,12 @@
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (NSString *name in payloads) {
         for (IJBParser *p in self.parsers) {
-            NSData *data = [self dataForPayload:name];
+            NSData *data = [[self dataForPayload:name] retain];
             for (int i = 0; i < iterations; i++) {
                 [self performPerformanceTestForParser:p payload:name data:data];
             }
             [self.payloadCache removeAllObjects];
+            [data release];
         }
     }
 }
@@ -373,16 +431,16 @@
             [self.payloadCache removeAllObjects];
             [dict setObject:d forKey:p1.name];
             
-            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            id object1 = [self objectOfTest:p1.selector payload:payload];
-            for (IJBParser *p2 in self.parsers) {
-                NSAutoreleasePool *nestedPool = [[NSAutoreleasePool alloc] init];
-                id object2 = [self objectOfTest:p2.selector payload:payload];
-                BOOL equal = [self compareObject:object1 withObject:object2];
-                [d setObject:[NSNumber numberWithBool:equal] forKey:p2.name];
-                [nestedPool release];
+            @autoreleasepool {
+                id object1 = [self objectOfTest:p1.selector payload:payload];
+                for (IJBParser *p2 in self.parsers) {
+                    NSAutoreleasePool *nestedPool = [[NSAutoreleasePool alloc] init];
+                    id object2 = [self objectOfTest:p2.selector payload:payload];
+                    BOOL equal = [self compareObject:object1 withObject:object2];
+                    [d setObject:[NSNumber numberWithBool:equal] forKey:p2.name];
+                    [nestedPool release];
+                }
             }
-            [pool release];
         }
         [self printCompareReportForPayload:payload withDict:dict];
         [dict release];
@@ -424,6 +482,4 @@
     return error == nil ? object : nil;
 }
 
-
 @end
-
