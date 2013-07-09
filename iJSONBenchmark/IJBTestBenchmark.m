@@ -65,7 +65,6 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        self.payloadCache = [[NSCache alloc] init];
         self.payloads = [[NSArray arrayWithObjects:
                           @"apache_builds",
                           @"github_events",
@@ -209,18 +208,11 @@
 }
 
 - (NSData *)dataForPayload:(NSString *)name {
-    @autoreleasepool {
-        NSData *data = [self.payloadCache objectForKey:name];
-        if (data == nil) {
-            NSString *file = [[NSBundle mainBundle] pathForResource:name
-                                                             ofType:@"json"
-                                                        inDirectory:@"payload"];
-            data = [NSData dataWithContentsOfFile:file];
-            [self.payloadCache setObject:data forKey:name];
-        }
-        
-        return data;
-    }
+    NSString *file = [[NSBundle mainBundle] pathForResource:name
+                                                     ofType:@"json"
+                                                inDirectory:@"payload"];
+    NSData *data = [NSData dataWithContentsOfFile:file];
+    return data;
 }
 
 - (IJBTestBenchmarkResult *)resultForTest:(IJBParser *)parser
@@ -272,7 +264,6 @@
     
     IJBTestBenchmarkResult *r = [self resultForTest:parser payload:name data:data];
     [array addObject:r];
-    [self.payloadCache removeAllObjects];
 }
 
 - (void)appendString:(NSString *)str toStream:(NSOutputStream *)stream {
@@ -391,10 +382,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
     basePath = [basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"cmp_%@.csv", name]];
-    NSLog(@"%@", basePath);
     [str writeToFile:basePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    
-    NSLog(@"\n%@%@", header, rows);
 }
 
 - (void)performTestWithIterations:(int)iterations forParser:(IJBParser *)p {
@@ -404,20 +392,19 @@
         for (int i = 0; i < iterations; i++) {
             [self performPerformanceTestForParser:p payload:name data:data];
         }
-        [self.payloadCache removeAllObjects];
     }
 }
 
 - (void)performTestWithIterations:(int)iterations {
     self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     for (NSString *name in payloads) {
-        for (IJBParser *p in self.parsers) {
-            NSData *data = [[self dataForPayload:name] retain];
-            for (int i = 0; i < iterations; i++) {
-                [self performPerformanceTestForParser:p payload:name data:data];
+        @autoreleasepool {
+            for (IJBParser *p in self.parsers) {
+                NSData *data = [self dataForPayload:name];
+                for (int i = 0; i < iterations; i++) {
+                    [self performPerformanceTestForParser:p payload:name data:data];
+                }
             }
-            [self.payloadCache removeAllObjects];
-            [data release];
         }
     }
 }
@@ -428,7 +415,6 @@
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:count];
         for (IJBParser *p1 in self.parsers) {
             NSMutableDictionary *d = [NSMutableDictionary dictionaryWithCapacity:count];
-            [self.payloadCache removeAllObjects];
             [dict setObject:d forKey:p1.name];
             
             @autoreleasepool {

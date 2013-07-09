@@ -31,7 +31,6 @@
 
 @interface IJBTestBenchmark : NSObject
 
-@property (nonatomic, retain) NSCache *payloadCache;
 @property (nonatomic, copy) NSArray *payloads;
 @property (nonatomic, copy) NSArray *parsers;
 @property (nonatomic, retain) NSMutableDictionary *results;
