@@ -74,7 +74,7 @@ Benchmark results
 * Device: iPad (4th generation Model A1458)
 * OS: 6.1.3 (10B329)
 * 50 iterations per payload
-* Results provided in nanosec.
+* Results provided in nanosec (less is better)
 * Charts display average value per payload 
 * Other reports can be found [here](https://github.com/amamchur/iJSONBenchmark/tree/master/results)
 
