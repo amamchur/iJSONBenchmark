@@ -82,8 +82,8 @@
                         [IJBParser parserWithName:@"JSONKit" selector:@selector(goJSONKitWithPayload:)],
                         [IJBParser parserWithName:@"JsonLite" selector:@selector(goJsonLiteWithPayload:)],
                         [IJBParser parserWithName:@"NSJSONSerialization" selector:@selector(goJSONSerialization:)],
-//                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
-//                        [IJBParser parserWithName:@"YAJL" selector:@selector(goYAJLWithPayload:)],
+                        [IJBParser parserWithName:@"SBJson" selector:@selector(goSBJsonWithPayload:)],
+                        [IJBParser parserWithName:@"YAJL" selector:@selector(goYAJLWithPayload:)],
                         nil];
         self.results = [NSMutableDictionary dictionaryWithCapacity:13];
     }
