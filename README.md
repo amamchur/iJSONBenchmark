@@ -1,6 +1,8 @@
 iJSONBenchmark
 ==============
 
+Bechnmark for Objective-C JSON parsers.
+
 JSON Parsers
 --------
 
@@ -8,13 +10,13 @@ JSON Parsers
 
 <a href="https://github.com/johnezang/JSONKit">JSONKit</a> (Commit 82157634ca0ca5b6a4a67a194dd11f15d9b72835)
 
-<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit 7a9a73eb740fa8e8679e4c10b0fd211b48dd1ba3)
+<a href="https://github.com/amamchur/jsonlite">JsonLite Objective-C</a> (Commit 43dd5b5888ee54b39cbd7ef27e86cbb5a57cdc90)
 
 <a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a> (iOS 6.1.3)
 
-<a href="https://github.com/stig/json-framework">SBJson</a> (Commit ad4bad36abb899b53a8eb9c0896f388ea484fbeb)
+<a href="https://github.com/stig/json-framework">SBJson</a> (Commit f30481843f7cc49be9b9e8f8fd0fe8f0162c9241)
 
-<a href="https://github.com/gabriel/yajl-objc">YAJL Framework</a> (Commit 29c91797005ce0c7eb914333662c5ce3721347af)
+<a href="https://github.com/gabriel/yajl-objc">YAJL Framework</a> (Commit 51f245719335dcc27434685fcec990de31729412)
 
 
 Payload Information
