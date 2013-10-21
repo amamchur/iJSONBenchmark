@@ -16,7 +16,7 @@
 
 #import "IJBTestBenchmark.h"
 
-#import "JsonLiteAccumulator.h"
+#import "JsonLiteObjC/JsonLiteObjC.h"
 #import "SBJson.h"
 #import "JSONKit.h"
 #import "YAJL.h"
