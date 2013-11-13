@@ -17,7 +17,7 @@
 #import "IJBTestBenchmark.h"
 
 #import "JsonLiteObjC/JsonLiteObjC.h"
-#import "SBJson.h"
+#import "SBJson/SBJson.h"
 #import "JSONKit.h"
 #import "YAJL.h"
 #import "JPJson/JPJsonParser.h"
